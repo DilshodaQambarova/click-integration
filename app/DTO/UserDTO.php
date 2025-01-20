@@ -4,11 +4,13 @@ namespace App\DTO;
 
 class UserDTO
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
+    public string $name;
+    public $phone;
+    public $password;
+    public function __construct($name, $phone, $password)
     {
-        //
+        $this->name = $name;
+        $this->phone = $phone;
+        $this->password = $password;
     }
 }
