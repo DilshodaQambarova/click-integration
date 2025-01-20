@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\DTO\UserDTO;
 use App\Jobs\SendSmsJob;
-use App\Jobs\SendEmailJob;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
