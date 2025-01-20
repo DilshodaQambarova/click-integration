@@ -26,7 +26,7 @@ class SmsController extends Controller
             'Authorization' => 'Bearer ' . $this->getToken2(),
         ])->post('notify.eskiz.uz/api/message/sms/send', [
             'mobile_phone' => "998770692029",
-            'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:12345",
+            'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:" . rand(),
             'from'         => '4546',
         ]);
 
