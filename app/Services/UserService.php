@@ -19,22 +19,20 @@ class UserService extends BaseService implements UserServiceInterface
     public function registerUser($userDTO){
         $data = [
             'name' => $userDTO->name,
-            'email' => $userDTO->email,
+            'phone' => $userDTO->phone,
             'password' => bcrypt($userDTO->password),
-            'verification_token' => Str::random(20)
         ];
         return $this->userRepository->createUser($data);
     }
     public function loginUser($data){
-        $user = $this->userRepository->getUserByEmail($data['email']);
+        $user = $this->userRepository->getUserByEmail($data['phone']);
         if(!$user || !Hash::check($data['password'], $user->password)){
             return $this->error(__('errors.user.not_found'), 404);
         }
-        if($user->email_verified_at == null){
+        if($user->phone_verified_at == null){
             return $this->error(__('errors.email.not_verified'), 403);
         }
         return $user->createToken('login')->plainTextToken;
-
     }
 
 

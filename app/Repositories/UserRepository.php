@@ -12,18 +12,17 @@ class UserRepository implements UserRepositoryInterface
     public function createUser($data){
         $user = new User();
         $user->name = $data['name'];
-        $user->email = $data['email'];
+        $user->email = $data['phone'];
         $user->password = $data['password'];
-        $user->verification_token = $data['verification_token'];
         $user->save();
         return $user;
     }
-    public function getUserByEmail($email){
-        return User::where('email', $email)->firstOrFail();
+    public function getUserByEmail($phone){
+        return User::where('phone', $phone)->firstOrFail();
     }
     public function findUserByToken($token){
         $user = User::where('verification_token', $token)->firstOrFail();
-        $user->email_verified_at = now();
+        $user->phone_verified_at = now();
         $user->save();
         return $user;
     }
