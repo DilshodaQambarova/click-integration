@@ -25,8 +25,8 @@ class SmsController extends Controller
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->getToken(),
         ])->post('notify.eskiz.uz/api/message/sms/send', [
-            'mobile_phone' => "User tel raqam",
-            'message'      => "Sizining user-ga Sms xabar",
+            'mobile_phone' => "998770692029",
+            'message'      => "Bu Eskiz dan test",
             'from'         => '4546',
         ]);
 
