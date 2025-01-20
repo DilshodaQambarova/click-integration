@@ -23,13 +23,16 @@ class SmsController extends Controller
     public function sendSms(Request $request)
     {
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getToken(),
+            'Authorization' => 'Bearer ' . $this->getToken2(),
         ])->post('notify.eskiz.uz/api/message/sms/send', [
             'mobile_phone' => "998770692029",
-            'message'      => "Bu Eskiz dan test",
+            'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:12345",
             'from'         => '4546',
         ]);
 
         return response()->json($response->json());
+    }
+    public function getToken2(){
+        return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzk5NjM1MTksImlhdCI6MTczNzM3MTUxOSwicm9sZSI6InVzZXIiLCJzaWduIjoiNDA4Yzg5YWNhODhhMDZkODJhZDEwMDZkNjUzMzMzYmM1YjIzNzI2MzU2ZTEzZmE0NGJkMjE1YWViZTNiNGQwOCIsInN1YiI6IjM2MTYifQ.5fDNRTc6DKd4DfMg7-Z7JJOEmqTsdbFupzydidcmGAk';
     }
 }
