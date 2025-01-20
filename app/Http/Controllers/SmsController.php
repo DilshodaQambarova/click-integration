@@ -9,6 +9,8 @@ class SmsController extends Controller
 {
     public function getToken()
     {
+        dd(rand(12345,99999));
+
         $token = Cache::get('eskiz_api_token');
         if (! $token) {
             $response = Http::post('notify.eskiz.uz/api/auth/login', [
@@ -26,7 +28,7 @@ class SmsController extends Controller
             'Authorization' => 'Bearer ' . $this->getToken2(),
         ])->post('notify.eskiz.uz/api/message/sms/send', [
             'mobile_phone' => "998770692029",
-            'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:" . rand(),
+            'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:" . rand(12345, 99999),
             'from'         => '4546',
         ]);
 
