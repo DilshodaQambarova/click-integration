@@ -9,8 +9,6 @@ class SmsController extends Controller
 {
     public function getToken()
     {
-        dd(rand(12345,99999));
-
         $token = Cache::get('eskiz_api_token');
         if (! $token) {
             $response = Http::post('notify.eskiz.uz/api/auth/login', [

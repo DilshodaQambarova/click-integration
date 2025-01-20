@@ -6,23 +6,24 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class SendSmsJob implements ShouldQueue
 {
-    use Queueable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $phoneNumber;
-    public $message;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($phoneNumber, $message)
+    public function __construct($phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
-        $this->message = $message;
     }
 
     /**
