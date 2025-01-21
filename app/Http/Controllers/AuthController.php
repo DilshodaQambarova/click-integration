@@ -38,8 +38,7 @@ class AuthController extends Controller
     }
     public function verifyPhone(Request $request)
     {
-        $message = $this->userService->verifyPhone($request->code);
-        return $this->success([], $message);
+        return $this->userService->verifyPhone($request->code);
     }
     public function sendSms($user)
     {
