@@ -37,7 +37,7 @@ class SendSmsJob implements ShouldQueue
             'Authorization' => 'Bearer ' . $this->getToken2(),
         ])->post('https://notify.eskiz.uz/api/message/sms/send', [
             'mobile_phone' => $this->user->phoneNumber,
-            'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:",,
+            'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:" . $this->user->verification_code,
             'from'         => '4546',
         ]);
     }
