@@ -12,5 +12,5 @@ Route::middleware( 'setLocale')->group(function(){
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/verify-phone', [AuthController::class, 'verifyPhone']);
-    Route::post('/sms', [AuthController::class, 'handle']);
+    Route::post('/sms', [AuthController::class, 'sendSms']);
 });

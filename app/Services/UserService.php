@@ -43,11 +43,11 @@ class UserService extends BaseService implements UserServiceInterface
         return __('successes.phone.verified');
     }
     public function sendSms($phone){
+        Cache::forget('verification_code');
         Cache::remember('verification_code', 60, function(){
             return rand(12345, 99999);
         });
         $verification_code = Cache::get('verification_code');
-        dd($verification_code);
         Http::withHeaders([
             'Authorization' => 'Bearer ' . 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzk5NjM1MTksImlhdCI6MTczNzM3MTUxOSwicm9sZSI6InVzZXIiLCJzaWduIjoiNDA4Yzg5YWNhODhhMDZkODJhZDEwMDZkNjUzMzMzYmM1YjIzNzI2MzU2ZTEzZmE0NGJkMjE1YWViZTNiNGQwOCIsInN1YiI6IjM2MTYifQ.5fDNRTc6DKd4DfMg7-Z7JJOEmqTsdbFupzydidcmGAk',
         ])->post('https://notify.eskiz.uz/api/message/sms/send', [
