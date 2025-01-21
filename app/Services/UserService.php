@@ -3,6 +3,7 @@
 namespace App\Services;
 
 
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 use App\Interfaces\Services\UserServiceInterface;
 use App\Interfaces\Repositories\UserRepositoryInterface;
@@ -10,7 +11,7 @@ use App\Interfaces\Repositories\UserRepositoryInterface;
 class UserService extends BaseService implements UserServiceInterface
 {
 
-    public function __construct(protected UserRepositoryInterface $userRepository)
+    public function __construct(protected UserRepository $userRepository)
     {
         //
     }
@@ -20,6 +21,8 @@ class UserService extends BaseService implements UserServiceInterface
             'phone' => $userDTO->phone,
             'password' => bcrypt($userDTO->password),
         ];
+
+        // dd($data);
         return $this->userRepository->createUser($data);
     }
     public function loginUser($data){

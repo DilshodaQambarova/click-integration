@@ -16,11 +16,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+
         $this->app->bind(UserServiceInterface::class, UserService::class);
         $this->app->bind(UserRepositoryInterFace::class, UserRepository::class);
-        $this->app->singleton('files', function () {
-            return new Filesystem();
-        });
+
     }
 
     /**
