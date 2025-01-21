@@ -41,11 +41,14 @@ class UserService extends BaseService implements UserServiceInterface
         return __('successes.phone.verified');
     }
     public function sendSms($user){
+        $verification_code = rand(12345, 99999);
+        $user->verification_code = $verification_code;
+        $user->save();
         Http::withHeaders([
             'Authorization' => 'Bearer ' . 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzk5NjM1MTksImlhdCI6MTczNzM3MTUxOSwicm9sZSI6InVzZXIiLCJzaWduIjoiNDA4Yzg5YWNhODhhMDZkODJhZDEwMDZkNjUzMzMzYmM1YjIzNzI2MzU2ZTEzZmE0NGJkMjE1YWViZTNiNGQwOCIsInN1YiI6IjM2MTYifQ.5fDNRTc6DKd4DfMg7-Z7JJOEmqTsdbFupzydidcmGAk',
         ])->post('https://notify.eskiz.uz/api/message/sms/send', [
             'mobile_phone' => $user->phone,
-            'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:" . $user->verification_code,
+            'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:" . $verification_code,
             'from'         => '4546',
         ]);
     }

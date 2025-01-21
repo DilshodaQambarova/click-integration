@@ -2,12 +2,13 @@
 namespace App\Http\Controllers;
 
 use App\DTO\UserDTO;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Resources\UserResource;
-use App\Interfaces\Services\UserServiceInterface;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Http\Requests\LoginRequest;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Cache;
+use App\Http\Requests\RegisterRequest;
+use App\Interfaces\Services\UserServiceInterface;
 
 class AuthController extends Controller
 {
@@ -20,7 +21,7 @@ class AuthController extends Controller
 
         $userDTO = new UserDTO($request->name, $request->phone, $request->password);
         $user    = $this->userService->registerUser($userDTO);
-        // $this->sendSms($user);
+        $this->sendSms($user);
         return $this->success(new UserResource($user), __('successes.user.created'), 201);
     }
 
