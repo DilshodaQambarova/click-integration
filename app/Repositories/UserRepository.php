@@ -14,15 +14,15 @@ class UserRepository implements UserRepositoryInterface
         $user->name = $data['name'];
         $user->phone = $data['phone'];
         $user->password = $data['password'];
-        $user->
+        $user->verification_code = rand(12345, 99999);
         $user->save();
         return $user;
     }
-    public function getUserByEmail($phone){
+    public function getUserByPhone($phone){
         return User::where('phone', $phone)->firstOrFail();
     }
-    public function findUserByToken($token){
-        $user = User::where('verification_token', $token)->firstOrFail();
+    public function findUserByCode($code){
+        $user = User::where('verification_code', $code)->firstOrFail();
         $user->phone_verified_at = now();
         $user->save();
         return $user;

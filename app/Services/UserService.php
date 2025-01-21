@@ -25,7 +25,7 @@ class UserService extends BaseService implements UserServiceInterface
         return $this->userRepository->createUser($data);
     }
     public function loginUser($data){
-        $user = $this->userRepository->getUserByEmail($data['phone']);
+        $user = $this->userRepository->getUserByPhone($data['phone']);
         if(!$user || !Hash::check($data['password'], $user->password)){
             return $this->error(__('errors.user.not_found'), 404);
         }
