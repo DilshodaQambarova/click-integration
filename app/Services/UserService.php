@@ -30,12 +30,13 @@ class UserService extends BaseService implements UserServiceInterface
             return $this->error(__('errors.user.not_found'), 404);
         }
         if($user->phone_verified_at == null){
-            return $this->error(__('errors.email.not_verified'), 403);
+            return $this->error(__('errors.phone.not_verified'), 403);
         }
         return $user->createToken('login')->plainTextToken;
     }
     public function verifyPhone($code){
-        
+        $this->userRepository->findUserByCode($code);
+        return __('successes.phone.verified');
     }
 
 
