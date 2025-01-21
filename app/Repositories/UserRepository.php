@@ -2,9 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Jobs\SendEmailJob;
 use App\Models\User;
-use Illuminate\Support\Str;
 use App\Interfaces\Repositories\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface

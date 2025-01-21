@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\DTO\UserDTO;
-use Illuminate\Support\Str;
-use App\Traits\ResponseTrait;
+
 use Illuminate\Support\Facades\Hash;
 use App\Interfaces\Services\UserServiceInterface;
 use App\Interfaces\Repositories\UserRepositoryInterface;
