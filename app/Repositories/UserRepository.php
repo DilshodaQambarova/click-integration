@@ -12,8 +12,9 @@ class UserRepository implements UserRepositoryInterface
     public function createUser($data){
         $user = new User();
         $user->name = $data['name'];
-        $user->email = $data['phone'];
+        $user->phone = $data['phone'];
         $user->password = $data['password'];
+        $user->
         $user->save();
         return $user;
     }
