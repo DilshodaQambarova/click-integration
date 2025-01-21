@@ -34,6 +34,9 @@ class UserService extends BaseService implements UserServiceInterface
         }
         return $user->createToken('login')->plainTextToken;
     }
+    public function verifyPhone($code){
+        
+    }
 
 
 }
