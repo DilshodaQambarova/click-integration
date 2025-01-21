@@ -26,11 +26,14 @@ class AuthController extends Controller
         $token = $this->userService->loginUser($request->all());
         return $this->success($token, __('successes.user.logged'));
     }
-    public function findUser(Request $request){
+    public function getUser(Request $request){
         return $this->success(new UserResource($request->user()));
     }
     public function logout(Request $request){
         $request->user()->currentAccessToken()->delete();
         return $this->success([], __('successes.user.logged_out'), 204);
+    }
+    public function verify(Request $request){
+        
     }
 }
