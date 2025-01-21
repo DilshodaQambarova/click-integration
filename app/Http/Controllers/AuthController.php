@@ -19,7 +19,7 @@ class AuthController extends Controller
 
         $userDTO = new UserDTO($request->name, $request->phone, $request->password);
         $user = $this->userService->registerUser($userDTO);
-        SendSmsJob::dispatch($user->phone);
+        SendSmsJob::dispatch($user);
         return $this->success(new UserResource($user), __('successes.user.created'), 201);
     }
     public function login(LoginRequest $request){
