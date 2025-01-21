@@ -6,8 +6,8 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Interfaces\Services\UserServiceInterface;
-use App\Jobs\SendSmsJob;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class AuthController extends Controller
 {
@@ -20,9 +20,10 @@ class AuthController extends Controller
 
         $userDTO = new UserDTO($request->name, $request->phone, $request->password);
         $user    = $this->userService->registerUser($userDTO);
-        SendSmsJob::dispatch($user);
+        // $this->sendSms($user);
         return $this->success(new UserResource($user), __('successes.user.created'), 201);
     }
+
     public function login(LoginRequest $request)
     {
         $token = $this->userService->loginUser($request->all());
@@ -41,5 +42,9 @@ class AuthController extends Controller
     {
         $message = $this->userService->verifyPhone($request->code);
         return $this->success([], $message);
+    }
+    public function sendSms($user)
+    {
+        return $this->userService->sendSms($user);
     }
 }
