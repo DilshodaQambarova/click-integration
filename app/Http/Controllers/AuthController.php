@@ -5,6 +5,8 @@ use App\DTO\UserDTO;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\RegisterRequest;
 use App\Interfaces\Services\UserServiceInterface;
 
@@ -38,8 +40,9 @@ class AuthController extends Controller
         return $this->userService->verifyPhone($request->code);
     }
 
-    public function sendSms($user)
+    public function sendSms()
     {
+        $user = Cache::get('user');
         return $this->userService->sendSms($user);
     }
 }

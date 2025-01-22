@@ -13,7 +13,7 @@ class UserRepository implements UserRepositoryInterface
         $user->name = $data['name'];
         $user->phone = $data['phone'];
         $user->password = $data['password'];
-        $user->verification_code = rand(12345, 99999);
+        $user->verification_code = rand(10000, 99999);
         $user->save();
         return $user;
     }
