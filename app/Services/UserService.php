@@ -3,6 +3,7 @@
 namespace App\Services;
 
 
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
@@ -43,11 +44,12 @@ class UserService extends BaseService implements UserServiceInterface
         return $this->success([], __('successes.phone.verified'));
     }
     public function sendSms($user){
+        $u = User::where('phone', $user['phone'])->firstOrFail();
         Http::withHeaders([
             'Authorization' => 'Bearer ' . 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzk5NjM1MTksImlhdCI6MTczNzM3MTUxOSwicm9sZSI6InVzZXIiLCJzaWduIjoiNDA4Yzg5YWNhODhhMDZkODJhZDEwMDZkNjUzMzMzYmM1YjIzNzI2MzU2ZTEzZmE0NGJkMjE1YWViZTNiNGQwOCIsInN1YiI6IjM2MTYifQ.5fDNRTc6DKd4DfMg7-Z7JJOEmqTsdbFupzydidcmGAk',
         ])->post('https://notify.eskiz.uz/api/message/sms/send', [
-            'mobile_phone' => $user['phone'],
-            'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:" . $user['verification_code'],
+            'mobile_phone' => $u->phone,
+            'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:" . $u->verification_code,
             'from'         => '4546',
         ]);
     }
