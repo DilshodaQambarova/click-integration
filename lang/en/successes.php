@@ -9,6 +9,7 @@ return [
         'logged' => 'User logged successfully!',
     ],
     'phone' => [
+        'sms' => 'Sms send successfully!',
         'verified' => 'Phone verified successfully!',
     ],
 ];

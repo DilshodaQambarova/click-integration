@@ -1,15 +1,12 @@
 <?php
-
 namespace App\Services;
 
-
+use App\Interfaces\Services\UserServiceInterface;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Cache;
-use App\Interfaces\Services\UserServiceInterface;
-use App\Interfaces\Repositories\UserRepositoryInterface;
 
 class UserService extends BaseService implements UserServiceInterface
 {
@@ -18,32 +15,39 @@ class UserService extends BaseService implements UserServiceInterface
     {
         //
     }
-    public function registerUser($userDTO){
+    public function registerUser($userDTO)
+    {
         $data = [
-            'name' => $userDTO->name,
-            'phone' => $userDTO->phone,
+            'name'     => $userDTO->name,
+            'phone'    => $userDTO->phone,
             'password' => bcrypt($userDTO->password),
         ];
-        Cache::put('user', $data, 120);
+        Cache::rememberForever('user', function () use ($data) {
+            return $data;
+        });
         return $this->userRepository->createUser($data);
     }
-    public function loginUser($data){
+    public function loginUser($data)
+    {
         $user = $this->userRepository->getUserByPhone($data['phone']);
-        if(!$user || !Hash::check($data['password'], $user->password)){
+        if (! $user || ! Hash::check($data['password'], $user->password)) {
             return $this->error(__('errors.user.not_found'), 404);
         }
-        if($user->phone_verified_at !== null){
+        if ($user->phone_verified_at !== null) {
 
             $token = $user->createToken('login')->plainTextToken;
             return $this->success($token, __('successes.user.logged'));
         }
-        return $this->error(__('errors.phone.not_verified'), 403);    }
+        return $this->error(__('errors.phone.not_verified'), 403);
+    }
 
-    public function verifyPhone($code){
+    public function verifyPhone($code)
+    {
         $this->userRepository->findUserByCode($code);
         return $this->success([], __('successes.phone.verified'));
     }
-    public function sendSms($user){
+    public function sendSms($user)
+    {
         $u = User::where('phone', $user['phone'])->firstOrFail();
         Http::withHeaders([
             'Authorization' => 'Bearer ' . 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzk5NjM1MTksImlhdCI6MTczNzM3MTUxOSwicm9sZSI6InVzZXIiLCJzaWduIjoiNDA4Yzg5YWNhODhhMDZkODJhZDEwMDZkNjUzMzMzYmM1YjIzNzI2MzU2ZTEzZmE0NGJkMjE1YWViZTNiNGQwOCIsInN1YiI6IjM2MTYifQ.5fDNRTc6DKd4DfMg7-Z7JJOEmqTsdbFupzydidcmGAk',
@@ -52,7 +56,7 @@ class UserService extends BaseService implements UserServiceInterface
             'message'      => "Afisha Market MCHJ Tasdiqlovchi kodni kiriting:" . $u->verification_code,
             'from'         => '4546',
         ]);
+        return $this->success([], __('successes.phone.sms'));
     }
-
 
 }

@@ -8,4 +8,4 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 Schedule::command('app:clean-unverified-users')->cron('0 0 */3 * *');
-Schedule::command('users:update-verify-codes')->everyMinute();
+Schedule::command('app:update-verify-codes')->everyMinute();

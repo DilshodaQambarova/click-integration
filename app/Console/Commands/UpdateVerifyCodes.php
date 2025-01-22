@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use App\Models\User;
 
 class UpdateVerifyCodes extends Command
@@ -12,14 +13,14 @@ class UpdateVerifyCodes extends Command
      *
      * @var string
      */
-    protected $signature = 'users:update-verify-codes';
+    protected $signature = 'app:update-verify-codes';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update verify codes for all users every minute';
+    protected $description = 'Update verification codes for all users every minute';
 
     /**
      * Execute the console command.
@@ -28,11 +29,16 @@ class UpdateVerifyCodes extends Command
      */
     public function handle()
     {
-        User::query()->update([
-            'verification_code' => rand(10000, 99999)
-        ]);
+        User::chunk(100, function ($users) {
+            foreach ($users as $user) {
+                $user->update([
+                    'verification_code' => rand(10000, 99999),
+                ]);
+            }
+        });
 
-        $this->info('All user verify codes have been updated.');
-        return 1;
+        $this->info('Verification codes have been successfully updated for all users.');
+
+        return 0;
     }
 }

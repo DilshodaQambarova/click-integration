@@ -10,5 +10,6 @@ return [
     ],
     'phone' => [
         'verified' => 'Telefon raqam muvaffaqiyatli tasdiqlandi!',
+        'sms' => 'Xabar muvaffaqiyatli jo\'natildi!'
     ],
 ];
