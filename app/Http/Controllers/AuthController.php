@@ -2,12 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\DTO\UserDTO;
-use App\Jobs\SendEmailJob;
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\RegisterRequest;
 use App\Interfaces\Services\UserServiceInterface;
 
@@ -20,8 +17,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $userDTO = new UserDTO($request->name, $request->phone, $request->password);
-        $user    = $this->userService->registerUser($userDTO);
-        SendEmailJob::dispatch($user);
+        $user = $this->userService->registerUser($userDTO);
         return $this->success(new UserResource($user), __('successes.user.created'), 201);
     }
     public function login(LoginRequest $request)
@@ -36,10 +32,6 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return $this->success([], __('successes.user.logged_out'), 204);
-    }
-    public function verifyEmail(Request $request)
-    {
-        return $this->userService->verifyEmail($request->token);
     }
     public function verifyPhone(Request $request)
     {

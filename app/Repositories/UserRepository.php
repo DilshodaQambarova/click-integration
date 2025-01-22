@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use App\Interfaces\Repositories\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface
@@ -18,12 +19,6 @@ class UserRepository implements UserRepositoryInterface
     }
     public function getUserByPhone($phone){
         return User::where('phone', $phone)->firstOrFail();
-    }
-    public function findUserByToken($token){
-        $user = User::where('verification_token', $token)->firstOrFail();
-        $user->email_verified_at = now();
-        $user->save();
-        return $user;
     }
     public function findUserByCode($code){
         $user = User::where('verification_code', $code)->firstOrFail();

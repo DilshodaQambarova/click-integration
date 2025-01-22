@@ -37,10 +37,7 @@ class UserService extends BaseService implements UserServiceInterface
             return $this->success($token, __('successes.user.logged'));
         }
         return $this->error(__('errors.phone.not_verified'), 403);    }
-    public function verifyEmail($token){
-        $this->userRepository->findUserByToken($token);
-        return $this->success([], __('successes.email.verified'));
-    }
+
     public function verifyPhone($code){
         $this->userRepository->findUserByCode($code);
         return $this->success([], __('successes.phone.verified'));
