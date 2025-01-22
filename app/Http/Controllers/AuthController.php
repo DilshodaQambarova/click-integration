@@ -33,7 +33,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        return $this->success([], __('successes.user.logged_out'), 204);
+        return $this->success([], __('successes.user.logged_out'));
     }
     public function verifyPhone(Request $request)
     {

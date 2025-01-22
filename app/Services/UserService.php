@@ -22,6 +22,7 @@ class UserService extends BaseService implements UserServiceInterface
             'phone'    => $userDTO->phone,
             'password' => bcrypt($userDTO->password),
         ];
+        Cache::forget('user');
         Cache::rememberForever('user', function () use ($data) {
             return $data;
         });
