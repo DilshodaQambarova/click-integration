@@ -52,7 +52,7 @@ php artisan schedule:run
 php artisan serve
 ```
 ## Api 
-- [Api Documentation](https://documenter.getpostman.com/view/39432331/2sAYQdjVkT)
+<a target="_blank" href="https://documenter.getpostman.com/view/39432331/2sAYQdjVkT">Api Documentation</a>
 ## Usage
 
 - User Registration: When a user registers, they will receive an SMS with a verification code.
