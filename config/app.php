@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url'             => env('APP_URL', 'http://localhost'),
+    'url'             => env('APP_URL', 'http://localhost:8000/api'),
 
     /*
     |--------------------------------------------------------------------------
@@ -124,6 +124,6 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store'  => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-  
+
 
 ];
