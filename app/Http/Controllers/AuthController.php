@@ -20,6 +20,7 @@ class AuthController extends Controller
     {
         $userDTO = new UserDTO($request->name, $request->phone, $request->password);
         $user = $this->userService->registerUser($userDTO);
+        $this->sendSms($user);
         return $this->success(new UserResource($user), __('successes.user.created'), 201);
     }
     public function login(LoginRequest $request)
@@ -40,9 +41,8 @@ class AuthController extends Controller
         return $this->userService->verifyPhone($request->code);
     }
 
-    public function sendSms()
+    public function sendSms($user)
     {
-        $user = Cache::get('user');
         return $this->userService->sendSms($user);
     }
 }
