@@ -9,7 +9,7 @@ Route::middleware( 'setLocale')->group(function(){
         Route::get('/user', [AuthController::class, 'getUser']);
         Route::get('/logout', [AuthController::class, 'logout']);
     });
-    Route::get('/verify-phone', [AuthController::class, 'verifyPhone']);
+    Route::post('/verify-phone', [AuthController::class, 'verifyPhone']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
 });

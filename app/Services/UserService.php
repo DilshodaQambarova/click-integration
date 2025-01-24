@@ -41,7 +41,7 @@ class UserService extends BaseService implements UserServiceInterface
     public function verifyPhone($data)
     {
         $user = $this->userRepository->getUserByPhone($data['phone']);
-        if(!$data['code'] !== $user->verification_code){
+        if($data['code'] != $user->verification_code){
             return $this->error(__('errors.code.old_or_incorrect'));
         }
         $user->phone_verified_at = now();
