@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\VerifyPhoneRequest;
 use App\Interfaces\Services\UserServiceInterface;
 
 class AuthController extends Controller
@@ -36,9 +37,9 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
         return $this->success([], __('successes.user.logged_out'));
     }
-    public function verifyPhone(Request $request)
+    public function verifyPhone(VerifyPhoneRequest $request)
     {
-        return $this->userService->verifyPhone($request->code);
+        return $this->userService->verifyPhone($request->all());
     }
 
     public function sendSms($user)
