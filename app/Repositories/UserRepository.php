@@ -20,10 +20,5 @@ class UserRepository implements UserRepositoryInterface
     public function getUserByPhone($phone){
         return User::where('phone', $phone)->firstOrFail();
     }
-    public function findUserByCode($code){
-        $user = User::where('verification_code', $code)->firstOrFail();
-        $user->phone_verified_at = now();
-        $user->save();
-        return $user;
-    }
+    
 }

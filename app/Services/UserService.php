@@ -38,9 +38,14 @@ class UserService extends BaseService implements UserServiceInterface
         return $this->error(__('errors.phone.not_verified'), 403);
     }
 
-    public function verifyPhone($code)
+    public function verifyPhone($data)
     {
-        $this->userRepository->findUserByCode($code);
+        $user = $this->userRepository->getUserByPhone($data['phone']);
+        if(!$data['code'] !== $user->verification_code){
+            return $this->error(__('errors.code.old_or_incorrect'));
+        }
+        $user->phone_verified_at = now();
+        $user->save();
         return $this->success([], __('successes.phone.verified'));
     }
     public function sendSms($user)
