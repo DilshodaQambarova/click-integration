@@ -42,6 +42,7 @@ class AuthController extends Controller
         return $this->userService->verifyPhone($request->all());
     }
 
+    
     public function sendSms($user)
     {
         return $this->userService->sendSms($user);
